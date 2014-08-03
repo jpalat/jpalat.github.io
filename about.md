@@ -7,9 +7,10 @@ Some information about you!
 
 ### More Information
 
-A bit about me! Or y'know. not.
-
+I was going to 
+write a biography, instead
+I write a haiku
 
 ### Contact me
 
-[email@domain.com](mailto:email@domain.com)
+[jay@palat.net](mailto:jay@palat.net)
