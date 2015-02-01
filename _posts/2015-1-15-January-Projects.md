@@ -1,6 +1,7 @@
 Over the holidays I read a blog post where someone was answering how they are so productive and the response is they don't want to waste a week.  So every week they work on something that moves them towards their goal. I thought this was an excellent idea so I've been started playing with different projects every weekend to play with different ideas, technologies and the like.  Keeping it small, try a tutorial or play with an idea.
 
 So what have I been up to this month?
+
 - Elastic search.  I started with this tutorial <Link> for using Elasitic Search to index my gmail.  On the way I started a new server and go a grip on how to use Elastic Search.  Pretty powerful tool that I'm still figuring out ways to employ.  Full-text search was a no brainer but seeing some of the aggregation capabilities was pretty interesting.  Looking to see if I can use that on projects that summarize data.
 
 - iBeacon/Raspberry Pi.  
