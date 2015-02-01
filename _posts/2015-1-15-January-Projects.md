@@ -1,3 +1,10 @@
+---
+layout: post
+title: January Projects
+author: jay
+---
+
+
 Over the holidays I read a blog post where someone was answering how they are so productive and the response is they don't want to waste a week.  So every week they work on something that moves them towards their goal. I thought this was an excellent idea so I've been started playing with different projects every weekend to play with different ideas, technologies and the like.  Keeping it small, try a tutorial or play with an idea.
 
 So what have I been up to this month?
