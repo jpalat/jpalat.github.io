@@ -6,7 +6,7 @@
 name: Jay Palat
 
 # Short bio or description (displayed in the header)
-description: I was going to write a tagline but, instead I wrote a haiku
+description: I was going to write a tagline, but instead, I wrote a haiku
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: http://jay.palat.net/front.jpg
@@ -18,7 +18,7 @@ avatar: http://jay.palat.net/front.jpg
 # Includes an icon in the footer for each username you enter
 footer-links:
   dribbble: 
-  email: 
+  email: jay@palat.net
   facebook: 
   flickr: 
   github: jpalat
