@@ -13,6 +13,8 @@ So what have I been up to this month?
 I've had a Raspberry Pi sitting around and I've been meaning to do something interesting with it for awhile.  I sat down one weekend and loaded the latest Raspbian image and went to town.  I created a new machine called PiBot.Had some fun getting back down in the Linux weeds.  I had picked up a Bluetooth LE USB adapter that I was able to get running.  Took me a few tries to realize that the bluez, the bluetooth library that comes with debian/raspbian doesn't support LTE.  I got that rolling and am pretty happy with the results.
 
 - Responsive Web
-I've also started carving out web stuff again, with some small changes to personal websites using skeleton for Responsive design.  This I think will be a launch point to help me write new applications.  I've started looking at mixing and matching items together.  I'm working on a new project to try and build a home dashboard on the PiBot.  The goal is to keep learning and find new ways to play.
+I've also started carving out web stuff again, with some small changes to personal websites using skeleton for Responsive design.  This I think will be a launch point to help me write new applications.  I've started looking at mixing and matching items together.  I'm working on a new project to try and build a home dashboard on the PiBot.  
+
+The goal is to keep learning and find new ways to play.
 
 
