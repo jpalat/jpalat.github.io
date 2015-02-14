@@ -26,12 +26,9 @@ footer-links:
   linkedin: jaypalat
   pinterest: 
   rss: # just type anything here for a working RSS icon, make sure you set the "url" above!
-<<<<<<< HEAD
   twitter: jpalat
-=======
-  twitter: jekyllrb
   stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
->>>>>>> FETCH_HEAD
+
 
 # Your disqus shortname, entering this will enable commenting on posts
 disqus: 
