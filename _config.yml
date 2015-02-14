@@ -26,7 +26,12 @@ footer-links:
   linkedin: jaypalat
   pinterest: 
   rss: # just type anything here for a working RSS icon, make sure you set the "url" above!
+<<<<<<< HEAD
   twitter: jpalat
+=======
+  twitter: jekyllrb
+  stackoverflow: # your stackoverflow profile, e.g. "users/50476/bart-kiers"
+>>>>>>> FETCH_HEAD
 
 # Your disqus shortname, entering this will enable commenting on posts
 disqus: 
@@ -48,9 +53,9 @@ baseurl: ""
 # !! You don't need to change any of the configuration flags below !!
 #
 
-markdown: kramdown
+markdown: redcarpet
 highlighter: pygments
-permalink: /:title
+permalink: /:title/
 
 # The release of Jekyll Now that you're using
 version: v1.0.0
@@ -62,7 +67,6 @@ sass:
 
 # Use the following plug-ins
 gems:
-  - jemoji # Emoji please!
   - jekyll-sitemap # Create a sitemap using the official Jekyll sitemap gem
 
 # Exclude these files from your production _site
