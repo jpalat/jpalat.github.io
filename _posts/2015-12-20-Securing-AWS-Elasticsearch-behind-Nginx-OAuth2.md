@@ -2,9 +2,6 @@
 layout: post
 title: Securing AWS Elasticsearch behind Nginx + OAuth2
 ---
-Securing AWS Elasticsearch behind Nginx + OAuth2.
-=================================================
-
 We are currently using AWS as our Elastic Search Provider.  Rather than allowing this service to be open from anywhere on the internet, we have used security groups to protect it and allow it to only accept traffic from our ETL box.  We are also using the AWS instance of kibana.  To support this, we added nginx as a reverse-proxy.  This improves things, but still allows anyone on the internet to access our server.  To foil would-be attackers we're going to protect our server using Oauth2.  This also reduces drag on our internal users by reducing the need for another new username and password.
 
 I wanted to include a SSL certificate and decided to try the new Let's Encrypt Library.
