@@ -23,7 +23,7 @@ The first two were 21M in size and only contained a single uImage file each.The 
 
 The troubling part was that none of these directories were the data directory.  Turns out there was one more partition that was not mounted. Using parted I was able to find my Data directory:
 ```
-jay@Rhiza-ThinkPad:~$ sudo parted -l
+jay@ThinkPad:~$ sudo parted -l
 [sudo] password for jay: 
 Model: ATA INTEL SSDSC2BW18 (scsi)
 Disk /dev/sda: 180GB
@@ -62,7 +62,7 @@ Number  Start   End     Size    File system  Name                Flags
 ```
 Partition 8 is my winner!  The data is being kept in a lvm format.  To access it we'll need a few tools.  First we'll install lvm2:
 ```
-jay@Rhiza-ThinkPad:~$ sudo apt-get install lvm2
+jay@ThinkPad:~$ sudo apt-get install lvm2
 Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
@@ -99,17 +99,17 @@ update-initramfs: deferring update (trigger activated)
 Processing triggers for libc-bin (2.19-0ubuntu6.6) ...
 Processing triggers for initramfs-tools (0.103ubuntu4.2) ...
 update-initramfs: Generating /boot/initrd.img-3.16.0-57-generic
-jay@Rhiza-ThinkPad:~$ 
+jay@ThinkPad:~$ 
 ```
 After installing lvm2 we can lvscan to get details about our storage:
 ```
-jay@Rhiza-ThinkPad:~$ sudo lvscan
+jay@ThinkPad:~$ sudo lvscan
   inactive          '/dev/vg1/lv1' [2.72 TiB] inherit
 ```
 
 Ok, we have an inactive device. Let's find out more about it:
 ```
-jay@Rhiza-ThinkPad:~$ sudo lvmdiskscan 
+jay@ThinkPad:~$ sudo lvmdiskscan 
   /dev/ram0  [      64.00 MiB] 
   /dev/ram1  [      64.00 MiB] 
   /dev/sda1  [     512.00 MiB] 
@@ -147,7 +147,7 @@ jay@Rhiza-ThinkPad:~$ sudo lvmdiskscan
 We can get more details by looking at the logical volume display:
 
 ```
-jay@Rhiza-ThinkPad:~$ sudo lvdisplay 
+jay@ThinkPad:~$ sudo lvdisplay 
   --- Logical volume ---
   LV Path                /dev/vg1/lv1
   LV Name                lv1
@@ -167,38 +167,38 @@ jay@Rhiza-ThinkPad:~$ sudo lvdisplay
 We can activate our drive using the following
 
 ```
-jay@Rhiza-ThinkPad:~$ modprobe dm-mod
-jay@Rhiza-ThinkPad:~$ sudo modprobe dm-mod
-jay@Rhiza-ThinkPad:~$ sudo vgchange -ay
+jay@ThinkPad:~$ modprobe dm-mod
+jay@ThinkPad:~$ sudo modprobe dm-mod
+jay@ThinkPad:~$ sudo vgchange -ay
   1 logical volume(s) in volume group "vg1" now active
-jay@Rhiza-ThinkPad:~$ lvscan
+jay@ThinkPad:~$ lvscan
   /dev/mapper/control: open failed: Permission denied
   Failure to communicate with kernel device-mapper driver.
   WARNING: Running as a non-root user. Functionality may be unavailable.
   No volume groups found
-jay@Rhiza-ThinkPad:~$ sudo lvscan
+jay@ThinkPad:~$ sudo lvscan
   ACTIVE            '/dev/vg1/lv1' [2.72 TiB] inherit
 ```
 
 Ok with that, we have something we can mount:
 
 ```
-jay@Rhiza-ThinkPad:~$ sudo mount /dev/vg1/lv1 recovery/
+jay@ThinkPad:~$ sudo mount /dev/vg1/lv1 recovery/
 mount: wrong fs type, bad option, bad superblock on /dev/mapper/vg1-lv1,
        missing codepage or helper program, or other error
        In some cases useful info is found in syslog - try
        dmesg | tail  or so
 
-jay@Rhiza-ThinkPad:~$ ls recovery/
-jay@Rhiza-ThinkPad:~$ ls
+jay@ThinkPad:~$ ls recovery/
+jay@ThinkPad:~$ ls
 Desktop    Downloads         Music     Public    Rescue.md  Videos
 Documents  examples.desktop  Pictures  recovery  Templates
-jay@Rhiza-ThinkPad:~$ ls recovery/
-jay@Rhiza-ThinkPad:~$ dm
+jay@ThinkPad:~$ ls recovery/
+jay@ThinkPad:~$ dm
 dmesg      dmidecode  dmsetup    dm-tool    
-jay@Rhiza-ThinkPad:~$ dm
+jay@ThinkPad:~$ dm
 dmesg      dmidecode  dmsetup    dm-tool    
-jay@Rhiza-ThinkPad:~$ dmesg |tail
+jay@ThinkPad:~$ dmesg |tail
 [ 2571.796555] EXT4-fs (sdc2): mounted filesystem without journal. Opts: (null)
 [ 2571.804386] EXT4-fs (sdc1): mounted filesystem without journal. Opts: (null)
 [ 2571.846094] EXT4-fs (sdc4): warning: checktime reached, running e2fsck is recommended
@@ -215,7 +215,7 @@ jay@Rhiza-ThinkPad:~$ dmesg |tail
 Looks like we have a blocksize we can't read.  Google gets me to the tool I need next: 
 
 ```
-jay@Rhiza-ThinkPad:~$ sudo apt-get install fuseext2
+jay@ThinkPad:~$ sudo apt-get install fuseext2
 Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
@@ -238,7 +238,7 @@ Using fuseext2 I can mount the drive in a read-only mode:
 
 
 ```
-jay@Rhiza-ThinkPad:~$ sudo fuseext2 -o ro -o sync_read /dev/vg1/lv1 recovery/
+jay@ThinkPad:~$ sudo fuseext2 -o ro -o sync_read /dev/vg1/lv1 recovery/
 fuse-umfuse-ext2: version:'0.4', fuse_version:'29' [main (fuse-ext2.c:331)]
 fuse-umfuse-ext2: enter [do_probe (do_probe.c:30)]
 fuse-umfuse-ext2: leave [do_probe (do_probe.c:55)]
@@ -248,9 +248,9 @@ fuse-umfuse-ext2: opts.volname: Data [main (fuse-ext2.c:360)]
 fuse-umfuse-ext2: opts.options: ro,sync_read [main (fuse-ext2.c:361)]
 fuse-umfuse-ext2: parsed_options: sync_read,ro,fsname=/dev/vg1/lv1 [main (fuse-ext2.c:362)]
 fuse-umfuse-ext2: mounting read-only [main (fuse-ext2.c:378)]
-jay@Rhiza-ThinkPad:~$ ls recovery 
+jay@ThinkPad:~$ ls recovery 
 ls: cannot access recovery: Permission denied
-jay@Rhiza-ThinkPad:~$ sudo ls recovery
+jay@ThinkPad:~$ sudo ls recovery
 anonftp    backup245.tm  lost+found  Public  rpalat.tm	TwonkyData
 backup245  dbd		 mt-daapd    rpalat  twonky
 ```
