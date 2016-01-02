@@ -22,6 +22,8 @@ When I pluged in the USB drive, I saw 6 partitions automatically mount themselve
 The first two were 21M in size and only contained a single uImage file each.The next two partitions were 1.1 GB and contained the OS portion of the NAS.  This was a linux installation.  The next two partitions were the Update and Config partitions respectively.  These look like the areas that config backups and upgrades were staged before being deployed to the NAS.
 
 The troubling part was that none of these directories were the data directory.  Turns out there was one more partition that was not mounted. Using parted I was able to find my Data directory:
+
+
 ```
 jay@ThinkPad:~$ sudo parted -l
 [sudo] password for jay: 
