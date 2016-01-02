@@ -6,6 +6,7 @@ title: Recovering Data from a Seagate Central NAS
 This is a guide to recovering data from a Seagate Central NAS. This is based one experience recovering data from a 3TB NAS.  The problem was that the network hardware had failed while the disk remained intact.  The first step I took was to remove the hard drive from the NAS.  There are serveral videos available on YouTube on how to disassemble the NAS.  The short of it was, all the pieces needed to be pried away from the case.  Once the sides and covers were off, it was just a four screws and thermal tape that kept the drive in place.  We put the drive in a SATA USB 3.0 container and got started from there.
 
 Teardown videos
+
 * https://www.youtube.com/watch?v=zwZwbrVGrTA
 * https://www.youtube.com/watch?v=TurLKE-QdDI
 
