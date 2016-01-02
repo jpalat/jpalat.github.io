@@ -195,15 +195,6 @@ mount: wrong fs type, bad option, bad superblock on /dev/mapper/vg1-lv1,
        In some cases useful info is found in syslog - try
        dmesg | tail  or so
 
-jay@ThinkPad:~$ ls recovery/
-jay@ThinkPad:~$ ls
-Desktop    Downloads         Music     Public    Rescue.md  Videos
-Documents  examples.desktop  Pictures  recovery  Templates
-jay@ThinkPad:~$ ls recovery/
-jay@ThinkPad:~$ dm
-dmesg      dmidecode  dmsetup    dm-tool    
-jay@ThinkPad:~$ dm
-dmesg      dmidecode  dmsetup    dm-tool    
 jay@ThinkPad:~$ dmesg |tail
 [ 2571.796555] EXT4-fs (sdc2): mounted filesystem without journal. Opts: (null)
 [ 2571.804386] EXT4-fs (sdc1): mounted filesystem without journal. Opts: (null)
@@ -218,7 +209,7 @@ jay@ThinkPad:~$ dmesg |tail
 
 ```
 
-Looks like we have a blocksize we can't read.  Google gets me to the tool I need next: 
+Ok, not quite there yet.  Looks like we have a blocksize we can't read.  Google gets me to the tool I need next: 
 
 ```
 jay@ThinkPad:~$ sudo apt-get install fuseext2
@@ -255,8 +246,8 @@ fuse-umfuse-ext2: opts.options: ro,sync_read [main (fuse-ext2.c:361)]
 fuse-umfuse-ext2: parsed_options: sync_read,ro,fsname=/dev/vg1/lv1 [main (fuse-ext2.c:362)]
 fuse-umfuse-ext2: mounting read-only [main (fuse-ext2.c:378)]
 jay@ThinkPad:~$ sudo ls recovery
-anonftp    backup245.tm  lost+found  Public  rpalat.tm	TwonkyData
-backup245  dbd		 mt-daapd    rpalat  twonky
+anonftp    backup245.tm  lost+found  Public  mydata.tm	TwonkyData
+backup245  dbd		 mt-daapd    mydata  twonky
 ```
 
 And we're golden! 
