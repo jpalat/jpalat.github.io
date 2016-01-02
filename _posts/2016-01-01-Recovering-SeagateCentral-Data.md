@@ -9,19 +9,21 @@ I am running this recovery from a Ubuntu 14.04.02 running on a Lenovo T430.  I t
 
 When I pluged in the USB drive, I saw 6 partitions automatically mount themselves. Using 'df -h' I extracted the following:
 
-'''
+```
 /dev/sdc2        20M  3.1M   16M  17% /media/jay/be20c011-d1e4-4ba5-af28-0ca95e2126ed
 /dev/sdc1        20M  3.1M   16M  17% /media/jay/35818e1a-5777-4764-a814-c79a66d25b63
 /dev/sdc4       976M  430M  480M  48% /media/jay/804eb4b2-eafb-400a-a725-270b81566d2c
 /dev/sdc3       976M  417M  493M  46% /media/jay/9e7525bf-1649-4a3e-8fa6-63b700e462aa
 /dev/sdc7       976M  126M  783M  14% /media/jay/Update
 /dev/sdc5       976M  126M  784M  14% /media/jay/Config
-'''
+```
 
 
 The first two were 21M in size and only contained a single uImage file each.The next two partitions were 1.1 GB and contained the OS portion of the NAS.  This was a linux installation.  The next two partitions were the Update and Config partitions respectively.  These look like the areas that config backups and upgrades were staged before being deployed to the NAS.
 
 The troubling part was that none of these directories were the data directory.  Turns out there was one more partition that was not mounted. Using parted I was able to find my Data directory:
+
+
 ```
 jay@ThinkPad:~$ sudo parted -l
 [sudo] password for jay: 
@@ -60,7 +62,9 @@ Number  Start   End     Size    File system  Name                Flags
  7      4338MB  5412MB  1074MB  ext4         Update              msftdata
  8      5412MB  3001GB  2995GB               Data                lvm
 ```
+
 Partition 8 is my winner!  The data is being kept in a lvm format.  To access it we'll need a few tools.  First we'll install lvm2:
+
 ```
 jay@ThinkPad:~$ sudo apt-get install lvm2
 Reading package lists... Done
@@ -101,7 +105,9 @@ Processing triggers for initramfs-tools (0.103ubuntu4.2) ...
 update-initramfs: Generating /boot/initrd.img-3.16.0-57-generic
 jay@ThinkPad:~$ 
 ```
+
 After installing lvm2 we can lvscan to get details about our storage:
+
 ```
 jay@ThinkPad:~$ sudo lvscan
   inactive          '/dev/vg1/lv1' [2.72 TiB] inherit
@@ -189,15 +195,6 @@ mount: wrong fs type, bad option, bad superblock on /dev/mapper/vg1-lv1,
        In some cases useful info is found in syslog - try
        dmesg | tail  or so
 
-jay@ThinkPad:~$ ls recovery/
-jay@ThinkPad:~$ ls
-Desktop    Downloads         Music     Public    Rescue.md  Videos
-Documents  examples.desktop  Pictures  recovery  Templates
-jay@ThinkPad:~$ ls recovery/
-jay@ThinkPad:~$ dm
-dmesg      dmidecode  dmsetup    dm-tool    
-jay@ThinkPad:~$ dm
-dmesg      dmidecode  dmsetup    dm-tool    
 jay@ThinkPad:~$ dmesg |tail
 [ 2571.796555] EXT4-fs (sdc2): mounted filesystem without journal. Opts: (null)
 [ 2571.804386] EXT4-fs (sdc1): mounted filesystem without journal. Opts: (null)
@@ -212,7 +209,7 @@ jay@ThinkPad:~$ dmesg |tail
 
 ```
 
-Looks like we have a blocksize we can't read.  Google gets me to the tool I need next: 
+Ok, not quite there yet.  Looks like we have a blocksize we can't read.  Google gets me to the tool I need next: 
 
 ```
 jay@ThinkPad:~$ sudo apt-get install fuseext2
@@ -248,11 +245,9 @@ fuse-umfuse-ext2: opts.volname: Data [main (fuse-ext2.c:360)]
 fuse-umfuse-ext2: opts.options: ro,sync_read [main (fuse-ext2.c:361)]
 fuse-umfuse-ext2: parsed_options: sync_read,ro,fsname=/dev/vg1/lv1 [main (fuse-ext2.c:362)]
 fuse-umfuse-ext2: mounting read-only [main (fuse-ext2.c:378)]
-jay@ThinkPad:~$ ls recovery 
-ls: cannot access recovery: Permission denied
 jay@ThinkPad:~$ sudo ls recovery
-anonftp    backup245.tm  lost+found  Public  rpalat.tm	TwonkyData
-backup245  dbd		 mt-daapd    rpalat  twonky
+anonftp    backup245.tm  lost+found  Public  mydata.tm	TwonkyData
+backup245  dbd		 mt-daapd    mydata  twonky
 ```
 
 And we're golden! 
