@@ -5,6 +5,10 @@ title: Recovering Data from a Seagate Central NAS
 
 This is a guide to recovering data from a Seagate Central NAS. This is based one experience recovering data from a 3TB NAS.  The problem was that the network hardware had failed while the disk remained intact.  The first step I took was to remove the hard drive from the NAS.  There are serveral videos available on YouTube on how to disassemble the NAS.  The short of it was, all the pieces needed to be pried away from the case.  Once the sides and covers were off, it was just a four screws and thermal tape that kept the drive in place.  We put the drive in a SATA USB 3.0 container and got started from there.
 
+Teardown videos
+https://www.youtube.com/watch?v=zwZwbrVGrTA
+https://www.youtube.com/watch?v=TurLKE-QdDI
+
 I am running this recovery from a Ubuntu 14.04.02 running on a Lenovo T430.  I tried this using a Virtual Machine on a Mac, but I kept running into errors where the usb attached disks would disappear. I suspect that was a problem with the virtual machine rather than the physical disks.
 
 When I pluged in the USB drive, I saw 6 partitions automatically mount themselves. Using 'df -h' I extracted the following:
@@ -251,3 +255,9 @@ backup245  dbd		 mt-daapd    mydata  twonky
 ```
 
 And we're golden! 
+
+References
+----------
+Mounting LVM: http://pissedoffadmins.com/os/mount-unknown-filesystem-type-lvm2_member.html
+Mounting 4k blocks: http://unix.stackexchange.com/questions/73536/how-can-i-mount-filesystems-with-4kb-block-sizes
+LVM i/o Errors: http://www.linuxtechi.com/fixing-lvm-io-errors/
